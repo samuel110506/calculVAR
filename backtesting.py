@@ -25,7 +25,7 @@ tickers = [
     # Equities
     "AAPL", "MSFT", "AMZN", "GOOG", "META", "TSLA", "NVDA", "JPM", "XOM", "BRK-B"
 ]
-listalpha=[0.01,0.02,0.05,0.1,0.25,0.5]
+listalpha=[1%,2%,5%,10%,25%,50%]
 asset=st.selectbox("Choisissez un actif:",tickers)
 returns_dict = {}
 alpha=st.selectbox("Choisissez le seuil de risque",listalpha)
@@ -50,11 +50,11 @@ Médiane=returnscroissant.median()
 Variance=returnscroissant.var()
 Ecarttype=returnscroissant.std()
 z_score = norm.ppf(alpha)
-st.write(f"\n--- {asset} ---")
-st.write("VaR historique à 95%:",VaRH)
+niveauconfiance=1-alpha
+st.write("VaR historique à {niveauconfiance}:",VaRH)
 VaRP=(Espérance+Ecarttype*z_score)
-st.write("VaR paramètrique à 95%:",VaRP)
-testdate=st.date_input("Choisissez la date de backtesting(yyyy-mm-dd) (plus récente que la 1ère date",min_value=analysis_date)
+st.write("VaR paramètrique à {niveauconfiance}:",VaRP)
+testdate=st.date_input("Choisissez la date de backtesting(yyyy-mm-dd) (plus récente que la 1ère date)",min_value=analysis_date)
 datatest = yf.download(asset,start=analysis_date, end=testdate, interval="1d")
     
     # Calcul des rendements quotidiens
@@ -73,9 +73,9 @@ else:
 st.write("nombre de violations:",num_violations)
 st.write("taux de violations:",violation_rate)
 if violation_rate<=alpha:
-    st.write("La VaR est cohérente")
+    st.success("✅ La VaR est cohérente")
 else: 
-    st.write("Le risque est sous-estimé")
+    st.error("❌ Le risque est sous-estimé")
        # Tracer la courbe des rendements avec les violations et la VaR
 fig, ax = plt.subplots(figsize=(12,4))
 ax.plot(returnstest.index, returnstest.values, label='Rendement', color='blue')
@@ -87,6 +87,7 @@ ax.set_ylabel('Rendement')
 ax.legend()
 plt.xticks(rotation=45)
 st.pyplot(fig)
+
 
 
 
