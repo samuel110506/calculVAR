@@ -25,10 +25,10 @@ tickers = [
     # Equities
     "AAPL", "MSFT", "AMZN", "GOOG", "META", "TSLA", "NVDA", "JPM", "XOM", "BRK-B"
 ]
-listalpha=[1%,2%,5%,10%,25%,50%]
+listalpha = [0.01, 0.02, 0.05, 0.10, 0.25, 0.50]
 asset=st.selectbox("Choisissez un actif:",tickers)
 returns_dict = {}
-alpha=st.selectbox("Choisissez le seuil de risque",listalpha)
+alpha=st.selectbox("Choisissez le seuil de risque", listalpha, format_func=lambda x: f"{int(x*100)}%")
 
 analysis_date = st.date_input("Choisissez la date d’analyse(yyyy-mm-dd)")
 window = st.slider("Fenêtre de calcul (jours)", 50, 500, 250)
@@ -51,9 +51,9 @@ Variance=returnscroissant.var()
 Ecarttype=returnscroissant.std()
 z_score = norm.ppf(alpha)
 niveauconfiance=1-alpha
-st.write("VaR historique à {niveauconfiance}:",VaRH)
+st.write(f"VaR historique à {int(niveauconfiance*100)}% :", VaRH)
 VaRP=(Espérance+Ecarttype*z_score)
-st.write("VaR paramètrique à {niveauconfiance}:",VaRP)
+st.write(f"VaR paramètrique à {int(niveauconfiance*100)}% :", VaRH)
 testdate=st.date_input("Choisissez la date de backtesting(yyyy-mm-dd) (plus récente que la 1ère date)",min_value=analysis_date)
 datatest = yf.download(asset,start=analysis_date, end=testdate, interval="1d")
     
@@ -92,3 +92,4 @@ st.pyplot(fig)
 
 
     
+
