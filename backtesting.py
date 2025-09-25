@@ -91,9 +91,9 @@ st.pyplot(fig)
 st.markdown(
     """
     ---
-    👤 **Samuel [Nom]**  
-    🔗 [LinkedIn](https://www.linkedin.com/in/tonprofil)  
-    📧 [Email SKEMA](mailto:tonmail@skema.edu)
+    👤 **Samuel ZEITOUN, SKEMA PGE Student**  
+    🔗 [LinkedIn](https://www.linkedin.com/in/szeitoun11/)  
+    📧 [Email](mailto:samuel.zeitoun@skema.edu)
     """,
     unsafe_allow_html=True
 )
@@ -103,5 +103,6 @@ st.markdown(
 
 
     
+
 
 
