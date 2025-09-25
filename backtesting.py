@@ -88,8 +88,20 @@ ax.legend()
 plt.xticks(rotation=45)
 st.pyplot(fig)
 
+st.markdown(
+    """
+    ---
+    👤 **Samuel [Nom]**  
+    🔗 [LinkedIn](https://www.linkedin.com/in/tonprofil)  
+    📧 [Email SKEMA](mailto:tonmail@skema.edu)
+    """,
+    unsafe_allow_html=True
+)
+
+
 
 
 
     
+
 
