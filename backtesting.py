@@ -12,7 +12,7 @@ from scipy.stats import skew, kurtosis, norm
 import matplotlib.pyplot as plt
 
 
-st.title("Calcul de la Value at Risk")
+st.title("Value at Risk (VaR) Calculator")
 tickers = [
     # Forex
     "EURUSD=X", "GBPUSD=X", "USDJPY=X", "AUDUSD=X", "USDCAD=X", "USDCHF=X", "NZDUSD=X",
@@ -26,12 +26,12 @@ tickers = [
     "AAPL", "MSFT", "AMZN", "GOOG", "META", "TSLA", "NVDA", "JPM", "XOM", "BRK-B"
 ]
 listalpha = [0.01, 0.02, 0.05, 0.10, 0.25, 0.50]
-asset=st.selectbox("Choisissez un actif:",tickers)
+asset=st.selectbox("Select an asset:",tickers)
 returns_dict = {}
-alpha=st.selectbox("Choisissez le seuil de risque", listalpha, format_func=lambda x: f"{int(x*100)}%")
+alpha=st.selectbox("Select the risk level", listalpha, format_func=lambda x: f"{int(x*100)}%")
 
-analysis_date = st.date_input("Choisissez la date d’analyse(yyyy-mm-dd)")
-window = st.slider("Fenêtre de calcul (jours)", 50, 500, 250)
+analysis_date = st.date_input("")
+window = st.slider("Calculation window (days)", 50, 500, 250)
 data = yf.download(asset, start="2015-01-01", end=analysis_date)
 data = data.tail(window)
     
@@ -51,10 +51,10 @@ Variance=returnscroissant.var()
 Ecarttype=returnscroissant.std()
 z_score = norm.ppf(alpha)
 niveauconfiance=1-alpha
-st.write(f"VaR historique à {int(niveauconfiance*100)}% :", VaRH)
+st.write(f"Historical VaR at {int{niveauconfiance*100}}% :", VaRH)
 VaRP=(Espérance+Ecarttype*z_score)
-st.write(f"VaR paramètrique à {int(niveauconfiance*100)}% :", VaRH)
-testdate=st.date_input("Choisissez la date de backtesting(yyyy-mm-dd) (plus récente que la 1ère date)",min_value=analysis_date)
+st.write(f"Parametric VaR at {int{niveauconfiance*100}}% :", VaRH)
+testdate=st.date_input("Select the backtesting date (must be later than the analysis date)",min_value=analysis_date)
 datatest = yf.download(asset,start=analysis_date, end=testdate, interval="1d")
     
     # Calcul des rendements quotidiens
@@ -65,25 +65,25 @@ violations = returnstest[returnstest < VaRP]
 num_violations=0
 violation_rate=0
 if len(returnstest) == 0:
-    st.warning("Pas de données disponibles pour la période de backtesting.")
+    st.warning("No data available for the backtesting period.")
 else:
     num_violations = len(violations)
     total_days = len(returnstest)
     violation_rate = num_violations / total_days
-st.write("nombre de violations:",num_violations)
-st.write("taux de violations:",violation_rate)
+st.write("Number of violations",num_violations)
+st.write("Violation rate:",violation_rate)
 if violation_rate<=alpha:
-    st.success("✅ La VaR est cohérente")
+    st.success("✅ The VaR model is consistent")
 else: 
-    st.error("❌ Le risque est sous-estimé")
+    st.error("❌ The risk is underestimated")
        # Tracer la courbe des rendements avec les violations et la VaR
 fig, ax = plt.subplots(figsize=(12,4))
 ax.plot(returnstest.index, returnstest.values, label='Rendement', color='blue')
 ax.axhline(y=VaRP, color='red', linestyle='--', label='VaR 95%')
 ax.scatter(violations.index, violations.values, color='red', label='Violations', zorder=5)
-ax.set_title(f'Rendements (1 jour) pour {asset} avec VaR et violations')
+ax.set_title(f'Daily returns for {asset} with VaR and violations')
 ax.set_xlabel('Date')
-ax.set_ylabel('Rendement')
+ax.set_ylabel('Return')
 ax.legend()
 plt.xticks(rotation=45)
 st.pyplot(fig)
@@ -103,6 +103,7 @@ st.markdown(
 
 
     
+
 
 
 
