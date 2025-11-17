@@ -13,20 +13,58 @@ import matplotlib.pyplot as plt
 
 
 st.title("Value at Risk (VaR) Calculator")
-tickers = [
-    # Forex
-    "EURUSD=X", "GBPUSD=X", "USDJPY=X", "AUDUSD=X", "USDCAD=X", "USDCHF=X", "NZDUSD=X",
-    # Cryptos
-    "BTC-USD", "ETH-USD", "BNB-USD", "XRP-USD", "SOL-USD", "ADA-USD",
-    # Commodities
-    "GC=F", "SI=F", "CL=F", "BZ=F", "NG=F", "HG=F", "ZS=F", "KC=F",
-    # Indices
-    "^GSPC", "^DJI", "^IXIC", "^FTSE", "^GDAXI", "^FCHI", "^N225", "^HSI",
-    # Equities
-    "AAPL", "MSFT", "AMZN", "GOOG", "META", "TSLA", "NVDA", "JPM", "XOM", "BRK-B"
-]
+tickers = {
+    # --- Forex (Currencies) ---
+    "EURUSD=X": "Euro / US Dollar",
+    "GBPUSD=X": "British Pound / US Dollar",
+    "USDJPY=X": "US Dollar / Japanese Yen",
+    "AUDUSD=X": "Australian Dollar / US Dollar",
+    "USDCAD=X": "US Dollar / Canadian Dollar",
+    "USDCHF=X": "US Dollar / Swiss Franc",
+    "NZDUSD=X": "New Zealand Dollar / US Dollar",
+    
+    # --- Cryptocurrencies ---
+    "BTC-USD": "Bitcoin (BTC)",
+    "ETH-USD": "Ethereum (ETH)",
+    "BNB-USD": "Binance Coin (BNB)",
+    "XRP-USD": "XRP (Ripple)",
+    "SOL-USD": "Solana (SOL)",
+    "ADA-USD": "Cardano (ADA)",
+    
+    # --- Commodities (Futures) ---
+    "GC=F": "Gold Future (GC)",
+    "SI=F": "Silver Future (SI)",
+    "CL=F": "WTI Crude Oil Future (CL)",
+    "BZ=F": "Brent Crude Oil Future (BZ)",
+    "NG=F": "Natural Gas Future (NG)",
+    "HG=F": "Copper Future (HG)",
+    "ZS=F": "Soybean Future (ZS)",
+    "KC=F": "Coffee Future (KC)",
+    
+    # --- Indices ---
+    "^GSPC": "S&P 500 Index",
+    "^DJI": "Dow Jones Industrial Average",
+    "^IXIC": "NASDAQ Composite Index",
+    "^FTSE": "FTSE 100 (UK)",
+    "^GDAXI": "DAX Index (Germany)",
+    "^FCHI": "CAC 40 Index (France)",
+    "^N225": "Nikkei 225 (Japan)",
+    "^HSI": "Hang Seng Index (Hong Kong)",
+    
+    # --- Equities (Stocks) ---
+    "AAPL": "Apple Inc.",
+    "MSFT": "Microsoft Corp.",
+    "AMZN": "Amazon.com Inc.",
+    "GOOG": "Alphabet Inc. (Class C)",
+    "META": "Meta Platforms Inc.",
+    "TSLA": "Tesla Inc.",
+    "NVDA": "NVIDIA Corp.",
+    "JPM": "JPMorgan Chase & Co.",
+    "XOM": "Exxon Mobil Corp.",
+    "BRK-B": "Berkshire Hathaway Inc. (Class B)"
+}
 listalpha = [0.01, 0.02, 0.05, 0.10, 0.25, 0.50]
-asset=st.selectbox("Select an asset:",tickers)
+asset=st.selectbox("Select an asset:", options=list(ticker.keys()),format_func=lambda x: ticker[x])
 returns_dict = {}
 alpha=st.selectbox("Select the risk level", listalpha, format_func=lambda x: f"{int(x*100)}%")
 
@@ -103,6 +141,7 @@ st.markdown(
 
 
     
+
 
 
 
