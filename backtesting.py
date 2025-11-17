@@ -91,7 +91,7 @@ z_score = norm.ppf(alpha)
 niveauconfiance=(1-alpha)*100
 st.write(f"Historical VaR at {niveauconfiance}% :", VaRH)
 VaRP=(Espérance+Ecarttype*z_score)
-st.write(f"Parametric VaR at {niveauconfiance}% :", VaRH)
+st.write(f"Parametric VaR at {niveauconfiance}% :", VaRP)
 testdate=st.date_input("Select the backtesting date (must be later than the analysis date)",min_value=analysis_date)
 datatest = yf.download(asset,start=analysis_date, end=testdate, interval="1d")
     
@@ -141,6 +141,7 @@ st.markdown(
 
 
     
+
 
 
 
