@@ -64,7 +64,7 @@ tickers = {
     "BRK-B": "Berkshire Hathaway Inc. (Class B)"
 }
 listalpha = [0.01, 0.02, 0.05, 0.10, 0.25, 0.50]
-asset=st.selectbox("Select an asset:", options=list(ticker.keys()),format_func=lambda x: ticker[x])
+asset=st.selectbox("Select an asset:", options=list(tickers.keys()),format_func=lambda x: tickers[x])
 returns_dict = {}
 alpha=st.selectbox("Select the risk level", listalpha, format_func=lambda x: f"{int(x*100)}%")
 
@@ -141,6 +141,7 @@ st.markdown(
 
 
     
+
 
 
 
